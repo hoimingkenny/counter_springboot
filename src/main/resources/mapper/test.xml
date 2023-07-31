@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<mapper namespace = "testMapper">
+    <select id="queryBalance" resultType="long">
+        select t.uid from t_user t where t.id = 1
+    </select>
+</mapper>
