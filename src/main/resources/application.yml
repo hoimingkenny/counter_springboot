@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:sqlite:d:/test.db
+    url: jdbc:sqlite:D:/sqlite-tools-win32-x86-3420000/test
     driver-class-name: org.sqlite.JDBC
   redis:
     host: 127.0.0.1
@@ -8,7 +8,7 @@ spring:
     timeout: 6000ms
 
 mybatis:
-  mapper-locations: classpath:mapper/*.xml
+  mapperLocations: classpath:mapper/*.xml
 
 mybatis-plus:
   configuration:

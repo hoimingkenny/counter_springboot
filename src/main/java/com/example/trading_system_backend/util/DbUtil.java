@@ -7,12 +7,13 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 @Component
-public class DatabaseUtil {
+public class DbUtil
+{
 
     // 如何在靜態調用的工具類中注入Spring管理的對象
-    private static DatabaseUtil dbUtil = null;
+    private static DbUtil dbUtil = null;
 
-    private DatabaseUtil() {}
+    private DbUtil() {}
 
     @Autowired
     private SqlSessionTemplate sqlSessionTemplate;
@@ -27,7 +28,7 @@ public class DatabaseUtil {
 
     @PostConstruct
     private void init() {
-        dbUtil = new DatabaseUtil();
+        dbUtil = new DbUtil();
         dbUtil.setSqlSessionTemplate(this.sqlSessionTemplate);
     }
 
@@ -35,6 +36,7 @@ public class DatabaseUtil {
         Long res = dbUtil.getSqlSessionTemplate().selectOne(
                 "testMapper.queryBalance"
         );
+
         if (res == null) {
             return -1;
         } else {
