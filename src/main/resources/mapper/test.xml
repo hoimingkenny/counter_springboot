@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace = "testMapper">
-    <select id="queryBalance" resultType="long">
-        select t.uid from t_user t where t.id = 1
+    <select id="queryBalance" resultType="java.lang.String">
+        select u.name from users u where u.id = 1
     </select>
 </mapper>

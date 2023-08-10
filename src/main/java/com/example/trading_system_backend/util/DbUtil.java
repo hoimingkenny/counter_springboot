@@ -32,13 +32,13 @@ public class DbUtil
         dbUtil.setSqlSessionTemplate(this.sqlSessionTemplate);
     }
 
-    public static long getId() {
-        Long res = dbUtil.getSqlSessionTemplate().selectOne(
+    public static String getName() {
+        String res = dbUtil.getSqlSessionTemplate().selectOne(
                 "testMapper.queryBalance"
         );
 
         if (res == null) {
-            return -1;
+            return "N/A";
         } else {
             return res;
         }

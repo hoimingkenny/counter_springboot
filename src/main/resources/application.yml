@@ -1,6 +1,9 @@
+server:
+  port: 8090
+
 spring:
   datasource:
-    url: jdbc:sqlite:D:/sqlite-tools-win32-x86-3420000/test
+    url: jdbc:sqlite:/Users/kennycheng/sqlite-tools-osx-x86-3420000/test.db
     driver-class-name: org.sqlite.JDBC
   redis:
     host: 127.0.0.1
@@ -14,3 +17,15 @@ mybatis-plus:
   configuration:
     jdbc-type-for-null: 'null'
 
+# cache expiration time
+cacheexpire:
+  captcha: 100
+  account: 3600
+  order: 36000
+
+# location of machine
+counter:
+  dataCenterId: 0
+
+  # the working machine
+  workerId: 0

@@ -19,7 +19,7 @@ public class FirstController {
     @RequestMapping("/hello")
     public String Hello() {
 //        return "Hello World";
-        return "" + DbUtil.getId();
+        return "" + DbUtil.getName();
     }
 
     @RequestMapping("/hello2")
