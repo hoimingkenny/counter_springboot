@@ -1,7 +1,10 @@
 package com.example.trading_system_backend.util;
 
+import com.example.trading_system_backend.bean.res.Account;
+import com.google.common.collect.ImmutableMap;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Immutable;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -32,15 +35,34 @@ public class DbUtil
         dbUtil.setSqlSessionTemplate(this.sqlSessionTemplate);
     }
 
-    public static String getName() {
-        String res = dbUtil.getSqlSessionTemplate().selectOne(
-                "testMapper.queryBalance"
-        );
-
-        if (res == null) {
-            return "N/A";
-        } else {
-            return res;
-        }
+    // Authentication
+    public static Account queryAccount(long uid, String password) {
+        return dbUtil.getSqlSessionTemplate().selectOne("userMapper.queryAccount",
+                ImmutableMap.of("UId", uid, "Password", password));
     }
+
+    public static void updateLoginTime(long uid, String nowDate, String nowTime) {
+        dbUtil.getSqlSessionTemplate().update(
+                "userMapper.updateAccountLoginTime",
+                ImmutableMap.of(
+                        "UId", uid,
+                        "ModifyDate", nowDate,
+                        "ModifyTime", nowTime
+                )
+        );
+    }
+
+
+
+//    public static String getName() {
+//        String res = dbUtil.getSqlSessionTemplate().selectOne(
+//                "testMapper.queryBalance"
+//        );
+//
+//        if (res == null) {
+//            return "N/A";
+//        } else {
+//            return res;
+//        }
+//    }
 }

@@ -16,11 +16,11 @@ public class FirstController {
     @Autowired
     private StringRedisTemplate template;
 
-    @RequestMapping("/hello")
-    public String Hello() {
-//        return "Hello World";
-        return "" + DbUtil.getName();
-    }
+//    @RequestMapping("/hello")
+//    public String Hello() {
+////        return "Hello World";
+//        return "" + DbUtil.getName();
+//    }
 
     @RequestMapping("/hello2")
     public String Hello2() {
