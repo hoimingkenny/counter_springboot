@@ -5,11 +5,10 @@ import com.example.trading_system_backend.bean.res.CaptchaRes;
 import com.example.trading_system_backend.bean.res.CounterRes;
 import com.example.trading_system_backend.cache.CacheType;
 import com.example.trading_system_backend.cache.RedisStringCache;
-import com.example.trading_system_backend.service.AccountService;
+import com.example.trading_system_backend.service.IAccountService;
 import com.example.trading_system_backend.util.Captcha;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +24,7 @@ import static com.example.trading_system_backend.bean.res.CounterRes.RELOGIN;
 public class LoginController {
 
     @Autowired
-    private AccountService accountService;
+    private IAccountService accountService;
 
     @RequestMapping("/captcha")
     public CounterRes captcha() throws Exception {

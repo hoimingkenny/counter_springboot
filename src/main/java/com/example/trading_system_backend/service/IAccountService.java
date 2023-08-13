@@ -2,7 +2,7 @@ package com.example.trading_system_backend.service;
 
 import com.example.trading_system_backend.bean.res.Account;
 
-public interface AccountService {
+public interface IAccountService {
 
     // login
     Account login(long uid, String password, String captcha, String captchaId) throws Exception;

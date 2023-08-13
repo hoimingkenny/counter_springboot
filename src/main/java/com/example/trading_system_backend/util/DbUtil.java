@@ -1,15 +1,25 @@
 package com.example.trading_system_backend.util;
 
-import com.example.trading_system_backend.bean.res.Account;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
+import com.example.trading_system_backend.bean.res.*;
+import com.example.trading_system_backend.cache.CacheType;
+import com.example.trading_system_backend.cache.RedisStringCache;
+import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Immutable;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
+import javax.annotation.PostConstruct;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
 @Component
+@Log4j2
 public class DbUtil
 {
 
@@ -52,7 +62,87 @@ public class DbUtil
         );
     }
 
+    //////////////////// Fund ////////////////////
+    public static long getBalance(long uid){
+        Long res = dbUtil.getSqlSessionTemplate()
+                .selectOne("orderMapper.queryBalance",
+                        ImmutableMap.of("UId",uid));
+        if (res == null){
+            return -1;
+        } else {
+            return res;
+        }
+    }
 
+    //////////////////// Position ////////////////////
+    public static List<PositionInfo> getPosiList(long uid){
+        //查缓存
+        String suid = Long.toString(uid);
+        String posiS = RedisStringCache.get(suid, CacheType.POSI);
+
+        if(StringUtils.isEmpty(posiS)){
+            //未查到 查库
+            List<PositionInfo> tmp = dbUtil.getSqlSessionTemplate().selectList(
+                    "orderMapper.queryPosi",
+                    ImmutableMap.of("UId", uid)
+            );
+            List<PositionInfo> result =
+                    CollectionUtils.isEmpty(tmp) ? Lists.newArrayList()
+                            : tmp;
+            //更新缓存
+            RedisStringCache.cache(suid,JsonUtil.toJson(result),CacheType.POSI);
+            return result;
+        }else {
+            //查到 命中缓存
+            return JsonUtil.fromJsonArr(posiS,PositionInfo.class);
+        }
+    }
+
+    //////////////////// Order ////////////////////
+    public static List<OrderInfo> getOrderList(long uid){
+        //查缓存
+        String suid = Long.toString(uid);
+        String orderS = RedisStringCache.get(suid, CacheType.ORDER);
+        if(StringUtils.isEmpty(orderS)){
+            //未查到 查库
+            List<OrderInfo> tmp = dbUtil.getSqlSessionTemplate().selectList(
+                    "orderMapper.queryOrder",
+                    ImmutableMap.of("UId", uid)
+            );
+            List<OrderInfo> result =
+                    CollectionUtils.isEmpty(tmp) ? Lists.newArrayList()
+                            : tmp;
+            //更新缓存
+            RedisStringCache.cache(suid,JsonUtil.toJson(result),CacheType.ORDER);
+            return result;
+        }else {
+            //查到 命中缓存
+            return JsonUtil.fromJsonArr(orderS,OrderInfo.class);
+        }
+    }
+
+    //////////////////// Trade ////////////////////
+    public static List<TradeInfo> getTradeList(long uid){
+        //查缓存
+        String suid = Long.toString(uid);
+        String tradeS = RedisStringCache.get(suid, CacheType.TRADE);
+        if(StringUtils.isEmpty(tradeS)){
+            //未查到 查库
+            List<TradeInfo> tmp = dbUtil.getSqlSessionTemplate().selectList(
+                    "orderMapper.queryTrade",
+                    ImmutableMap.of("UId", uid)
+            );
+            List<TradeInfo> result =
+                    CollectionUtils.isEmpty(tmp) ? Lists.newArrayList()
+                            : tmp;
+            //更新缓存
+            RedisStringCache.cache(suid,JsonUtil.toJson(result),CacheType.TRADE);
+            return result;
+        }else {
+            //查到 命中缓存
+            return JsonUtil.fromJsonArr(tradeS,TradeInfo.class);
+        }
+    }
 
 //    public static String getName() {
 //        String res = dbUtil.getSqlSessionTemplate().selectOne(

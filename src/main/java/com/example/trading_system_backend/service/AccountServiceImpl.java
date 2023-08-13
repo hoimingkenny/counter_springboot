@@ -13,7 +13,7 @@ import thirdparty.uuid.SnowflakeUuid;
 import java.util.Date;
 
 @Component
-public class AccountServiceImpl implements AccountService {
+public class AccountServiceImpl implements IAccountService {
     @Override
     public Account login(long uid, String password, String captcha, String captchaId) throws Exception {
         // 1. check parameters

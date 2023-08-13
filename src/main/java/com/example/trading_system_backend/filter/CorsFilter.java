@@ -1,7 +1,7 @@
 package com.example.trading_system_backend.filter;
 
 
-import com.example.trading_system_backend.service.AccountService;
+import com.example.trading_system_backend.service.IAccountService;
 import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ public class CorsFilter implements Filter {
 
 
     @Autowired
-    private AccountService accountService;
+    private IAccountService accountService;
 
     private Set<String> whiteRootPaths = Sets.newHashSet(
             "login", "msgsocket", "test"
